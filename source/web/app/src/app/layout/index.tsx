@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Button } from 'antd';
+import { Layout, Menu, Button, Modal } from 'antd';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   UserOutlined,
   VideoCameraOutlined,
   UploadOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../store/actions/authActions';
 
 const { Header, Sider, Content } = Layout;
 
 const AppLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [logoutModalVisible, setLogoutModalVisible] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const toggle = () => {
     setCollapsed(!collapsed);
@@ -30,6 +36,30 @@ const AppLayout: React.FC = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  const handleSignOut = () => {
+    try {
+      localStorage.removeItem('token');
+      dispatch(logout());
+      navigate('/login');
+      console.log('Redirected to login page');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
+  const showLogoutModal = () => {
+    setLogoutModalVisible(true);
+  };
+
+  const handleLogoutCancel = () => {
+    setLogoutModalVisible(false);
+  };
+
+  const handleLogoutConfirm = () => {
+    handleSignOut();
+    setLogoutModalVisible(false);
+  };
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -63,13 +93,18 @@ const AppLayout: React.FC = () => {
             <div className="logo" />
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
               <Menu.Item key="1" icon={<UserOutlined />}>
-                Dashboard{' '}
+                Dashboard
               </Menu.Item>
               <Menu.Item key="2" icon={<VideoCameraOutlined />}>
                 <Link to="/home/addbook">Add Book</Link>
               </Menu.Item>
               <Menu.Item key="3" icon={<UploadOutlined />}>
                 <Link to="/home/list">List Book</Link>
+              </Menu.Item>
+              <Menu.Item key="logout" icon={<LogoutOutlined />}>
+                <Link to="#" onClick={showLogoutModal}>
+                  Log Out
+                </Link>
               </Menu.Item>
             </Menu>
           </Sider>
@@ -113,7 +148,22 @@ const AppLayout: React.FC = () => {
               <Menu.Item key="3" icon={<UploadOutlined />}>
                 <Link to="/home/list">List Book</Link>
               </Menu.Item>
+              <Menu.Item key="logout" icon={<LogoutOutlined />}>
+                <Link to="#" onClick={showLogoutModal}>
+                  Log Out
+                </Link>
+              </Menu.Item>
             </Menu>
+            <Modal
+              title="Logout Confirmation"
+              visible={logoutModalVisible}
+              onOk={handleLogoutConfirm}
+              onCancel={handleLogoutCancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <p>Are you sure you want to logout?</p>
+            </Modal>
           </Sider>
           <Layout
             className="site-layout"
