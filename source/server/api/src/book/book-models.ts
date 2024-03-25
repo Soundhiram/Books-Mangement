@@ -13,7 +13,7 @@ const BookSchema: Schema = new Schema({
   title: { type: String, required: true },
   author: { type: String, required: true },
   genre: { type: String, required: true },
-  yearOfPublication: { type: Number, required: true },
+  yearOfPublication: { type: String, required: true },
   archived: { type: Boolean, default: false } 
 
 });

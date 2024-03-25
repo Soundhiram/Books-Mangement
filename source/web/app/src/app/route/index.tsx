@@ -3,6 +3,8 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { PrivateRoute } from './private-route';
 import { RoutingConstraints } from './constraints';
 import CombineModule from '../login/index';
+import AddBooks from '../addBooks';
+import ListBook from '../bookList';
 
 const AppRoutes: React.FC = () => {
   const isAuthenticated = !!localStorage.getItem('token');
@@ -23,10 +25,12 @@ const AppRoutes: React.FC = () => {
           }
         />
         <Route
-          path="/store"
+          path="/home"
           element={<PrivateRoute isAuthenticated={isAuthenticated} />}
         >
-          <Route path="store" element={<p>Store</p>} />
+          <Route path="dashboard" element={<p>Dashboard</p>} />
+          <Route path="addbook" element={<AddBooks/>} />
+          <Route path="list" element={<ListBook/>} />
           <Route path="*" element={<p>404 Not Found</p>} />
         </Route>
       </Routes>

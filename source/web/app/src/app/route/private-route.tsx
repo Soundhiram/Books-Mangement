@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { RoutingConstraints } from './constraints';
+import AppLayout from '../layout';
 
 interface PrivateRouteProps {
   isAuthenticated: boolean;
@@ -11,7 +12,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ isAuthenticated }) => {
   if (!isAuthenticate) {
     return <Navigate to={RoutingConstraints.INDEX} />;
   }
-  return ;
+  return <AppLayout/>;
 };
 
 export { PrivateRoute };

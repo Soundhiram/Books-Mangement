@@ -3,7 +3,7 @@ import Book, { IBook } from './book-models';
 
 export const getAllBooks = async (req: Request, res: Response): Promise<void> => {
   try {
-    const books: IBook[] = await Book.find();
+    const books: IBook[] = await Book.find({ archived: false });
     res.status(200).json(books);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -47,8 +47,7 @@ export const deleteBook = async (req: Request, res: Response): Promise<void> => 
     try {
       const updatedBook: IBook | null = await Book.findByIdAndUpdate(
         id,
-        { archived: true }, 
-        { new: true }
+        { archived: true }
       );
   
       if (!updatedBook) {
