@@ -12,7 +12,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ isAuthenticated }) => {
   if (!isAuthenticate) {
     return <Navigate to={RoutingConstraints.INDEX} />;
   }
-  return <AppLayout/>;
+  return <AppLayout />;
 };
 
 export { PrivateRoute };

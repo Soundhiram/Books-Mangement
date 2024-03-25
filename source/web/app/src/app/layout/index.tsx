@@ -105,7 +105,7 @@ const AppLayout: React.FC = () => {
             <div className="logo" />
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
               <Menu.Item key="1" icon={<UserOutlined />}>
-                Dashboard{' '}
+                <Link to="/home/dashboard">Dashboard</Link>
               </Menu.Item>
               <Menu.Item key="2" icon={<VideoCameraOutlined />}>
                 <Link to="/home/addbook">Add Book</Link>

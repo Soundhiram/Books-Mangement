@@ -11,7 +11,7 @@ const AddBooks: React.FC = () => {
       .then((response) => {
         console.log('Book added:', response.data);
         message.success('Book added successfully!');
-        form.resetFields(); 
+        form.resetFields();
       })
       .catch((error) => {
         console.error('Error adding book:', error);
@@ -21,6 +21,7 @@ const AddBooks: React.FC = () => {
 
   return (
     <div>
+      <h1>Add Book</h1>
       <Row justify="center">
         <Col xl={12} lg={14} md={16} sm={20} xs={24}>
           <Form form={form} layout="vertical" onFinish={onFinish}>

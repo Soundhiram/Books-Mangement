@@ -5,6 +5,7 @@ import { RoutingConstraints } from './constraints';
 import CombineModule from '../login/index';
 import AddBooks from '../addBooks';
 import ListBook from '../bookList';
+import { Dashboard } from '../dashboard';
 
 const AppRoutes: React.FC = () => {
   const isAuthenticated = !!localStorage.getItem('token');
@@ -28,9 +29,9 @@ const AppRoutes: React.FC = () => {
           path="/home"
           element={<PrivateRoute isAuthenticated={isAuthenticated} />}
         >
-          <Route path="dashboard" element={<p>Dashboard</p>} />
-          <Route path="addbook" element={<AddBooks/>} />
-          <Route path="list" element={<ListBook/>} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="addbook" element={<AddBooks />} />
+          <Route path="list" element={<ListBook />} />
           <Route path="*" element={<p>404 Not Found</p>} />
         </Route>
       </Routes>
